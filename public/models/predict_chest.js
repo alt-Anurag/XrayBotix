@@ -118,7 +118,7 @@ async function predictChestFromUpload(imageElement) {
 
   previewBox.style.display = "none";
   loadingSpinner.style.display = "block";
-  analysisResults.style.display = "none"; 
+  analysisResults.style.display = "none";
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
   if (!model) await initChestModel();
@@ -199,9 +199,10 @@ async function predictChestFromUpload(imageElement) {
         /\s+/g,
         "-"
       )}" class="loading-spinner-small">
-        <img src="loader.png" alt="Generating analysis..." style="width: 24px; height: 24px;">
-        <p>Generating detailed analysis...</p>
-      </div>
+  <i class="fas fa-spinner fa-spin" style="font-size: 18px;"></i>
+  <p>Generating detailed analysis...</p>
+</div>
+
       <div id="detailed-analysis-${pred.className.replace(
         /\s+/g,
         "-"
