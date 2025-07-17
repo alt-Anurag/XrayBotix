@@ -1223,20 +1223,16 @@
                         Chest
                     </label>
                     <label class="xray-option">
-                        <input type="radio" name="xray-type" value="hand">
-                        Hand
-                    </label>
-                    <label class="xray-option">
-                        <input type="radio" name="xray-type" value="leg">
-                        Leg
-                    </label>
-                    <label class="xray-option">
                         <input type="radio" name="xray-type" value="spine">
                         Spine
                     </label>
                     <label class="xray-option">
                         <input type="radio" name="xray-type" value="dental">
                         Dental
+                    </label>
+                    <label class="xray-option">
+                        <input type="radio" name="xray-type" value="skull">
+                        Skull
                     </label>
                 </div>
                 <button class="btn btn-primary" id="select-next-btn" style="margin-top: 1.5rem;">
@@ -1428,10 +1424,26 @@
 
             const startAnalysis = () => {
                 const img = document.getElementById("image-preview");
-                if (img && img.src) {
-                    predictChestFromUpload(img); // model call
-                } else {
+                if (!img || !img.src) {
                     alert("No image loaded for prediction.");
+                    return;
+                }
+
+                switch (selectedXrayType) {
+                    case "chest":
+                        predictChestFromUpload(img);
+                        break;
+                    case "spine":
+                        predictSpineFromUpload(img);
+                        break;
+                    case "dental":
+                        predictDentalFromUpload(img);
+                        break;
+                    case "skull":
+                        predictSkullFromUpload(img);
+                        break;
+                    default:
+                        alert("Unsupported X-ray type selected.");
                 }
             };
 
@@ -1615,7 +1627,9 @@
 
     <!-- sourcing tm model .js code -->
     <script src="models/predict_chest.js"></script>
-
+    <script src="models/predict_spine.js"></script>
+    <script src="models/predict_dental.js"></script>
+    <script src="models/predict_skull.js"></script>
 
 </body>
 
