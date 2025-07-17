@@ -91,145 +91,7 @@ async function generateMedicalAnalysis(condition) {
     return null;
   }
 }
-// Function to generate and download PDF report
-function generatePDFReport() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
 
-  // Set up PDF styling
-  const pageWidth = doc.internal.pageSize.width;
-  const pageHeight = doc.internal.pageSize.height;
-  const margin = 20;
-  let yPosition = margin;
-
-  // Header
-  doc.setFontSize(20);
-  doc.setTextColor(40, 116, 166);
-  doc.text("AI X-RAY ANALYSIS REPORT", pageWidth / 2, yPosition, {
-    align: "center",
-  });
-  yPosition += 15;
-
-  // Date and time
-  doc.setFontSize(10);
-  doc.setTextColor(100, 100, 100);
-  const currentDate = new Date().toLocaleString();
-  doc.text(`Generated on: ${currentDate}`, pageWidth / 2, yPosition, {
-    align: "center",
-  });
-  yPosition += 20;
-
-  // Get filename from display
-  const fileName =
-    document.getElementById("file-name-display")?.textContent || "Unknown File";
-  doc.setFontSize(12);
-  doc.setTextColor(0, 0, 0);
-  doc.text(`File: ${fileName}`, margin, yPosition);
-  yPosition += 15;
-
-  // Line separator
-  doc.setLineWidth(0.5);
-  doc.line(margin, yPosition, pageWidth - margin, yPosition);
-  yPosition += 15;
-
-  // Analysis Results Header
-  doc.setFontSize(16);
-  doc.setTextColor(40, 116, 166);
-  doc.text("ANALYSIS RESULTS", margin, yPosition);
-  yPosition += 15;
-
-  // Get all result cards (excluding title card)
-  const resultCards = document.querySelectorAll(".result-card");
-  let analysisCount = 0;
-
-  resultCards.forEach((card, index) => {
-    // Skip the title card (first card)
-    if (index === 0) return;
-
-    analysisCount++;
-
-    // Extract condition name
-    const conditionHeader = card.querySelector("h3");
-    const conditionName = conditionHeader
-      ? conditionHeader.textContent
-      : "Unknown Condition";
-
-    // Extract confidence score
-    const confidenceText = card.textContent.match(/Confidence:\s*(\d+\.?\d*%)/);
-    const confidence = confidenceText ? confidenceText[1] : "N/A";
-
-    // Extract analysis text
-    const analysisDiv = card.querySelector(`[id^="detailed-analysis-"]`);
-    let analysisText = "";
-    if (analysisDiv) {
-      // Get text content and clean it up
-      analysisText = analysisDiv.textContent.trim();
-      // Remove any HTML tags if present
-      analysisText = analysisText.replace(/<[^>]*>/g, "");
-    }
-
-    // Check if we need a new page
-    if (yPosition > pageHeight - 60) {
-      doc.addPage();
-      yPosition = margin;
-    }
-
-    // Condition name
-    doc.setFontSize(14);
-    doc.setTextColor(220, 53, 69);
-    doc.text(`${analysisCount}. ${conditionName}`, margin, yPosition);
-    yPosition += 10;
-
-    // Confidence score
-    doc.setFontSize(12);
-    doc.setTextColor(40, 167, 69);
-    doc.text(`Confidence Level: ${confidence}`, margin + 10, yPosition);
-    yPosition += 15;
-
-    // Analysis details
-    if (analysisText) {
-      doc.setFontSize(10);
-      doc.setTextColor(0, 0, 0);
-
-      // Split text into lines that fit the page width
-      const maxWidth = pageWidth - 2 * margin - 10;
-      const lines = doc.splitTextToSize(analysisText, maxWidth);
-
-      lines.forEach((line) => {
-        if (yPosition > pageHeight - 20) {
-          doc.addPage();
-          yPosition = margin;
-        }
-        doc.text(line, margin + 10, yPosition);
-        yPosition += 6;
-      });
-    }
-
-    yPosition += 10;
-  });
-
-  // Footer disclaimer
-  if (yPosition > pageHeight - 40) {
-    doc.addPage();
-    yPosition = margin;
-  }
-
-  yPosition = Math.max(yPosition, pageHeight - 40);
-  doc.setFontSize(8);
-  doc.setTextColor(150, 150, 150);
-  doc.text(
-    "DISCLAIMER: This is an AI-generated analysis. Please consult a medical professional for actual diagnosis.",
-    pageWidth / 2,
-    yPosition,
-    { align: "center", maxWidth: pageWidth - 2 * margin }
-  );
-
-  // Save the PDF
-  const reportFileName = `X-Ray_Analysis_Report_${
-    new Date().toISOString().split("T")[0]
-  }.pdf`;
-  doc.save(reportFileName);
-}
 // predictions from uploaded image
 async function predictSpineFromUpload(imageElement) {
   const analysisResults = document.getElementById("analysis-results");
@@ -374,43 +236,15 @@ async function predictSpineFromUpload(imageElement) {
     }
   }
 
-  // Create button container
-  const buttonContainer = document.createElement("div");
-  buttonContainer.style.marginTop = "1rem";
-  buttonContainer.style.display = "flex";
-  buttonContainer.style.gap = "10px";
-  buttonContainer.style.justifyContent = "center";
-
-  // Download Report button
-  const downloadBtn = document.createElement("button");
-  downloadBtn.className = "btn btn-success";
-  downloadBtn.innerText = "Download Report";
-  downloadBtn.style.backgroundColor = "#28a745";
-  downloadBtn.style.color = "white";
-  downloadBtn.style.border = "none";
-  downloadBtn.style.padding = "10px 20px";
-  downloadBtn.style.borderRadius = "5px";
-  downloadBtn.style.cursor = "pointer";
-  downloadBtn.addEventListener("click", generatePDFReport);
-
-  // Close button
   const closeBtn = document.createElement("button");
   closeBtn.className = "btn btn-primary";
+  closeBtn.style.marginTop = "1rem";
+  closeBtn.id = "close-results-btn";
   closeBtn.innerText = "Close";
-  closeBtn.style.backgroundColor = "#007bff";
-  closeBtn.style.color = "white";
-  closeBtn.style.border = "none";
-  closeBtn.style.padding = "10px 20px";
-  closeBtn.style.borderRadius = "5px";
-  closeBtn.style.cursor = "pointer";
   closeBtn.addEventListener("click", () => {
     document.getElementById("upload-section").style.display = "none";
   });
 
-  // Add buttons to container
-  buttonContainer.appendChild(downloadBtn);
-  buttonContainer.appendChild(closeBtn);
-  analysisResults.appendChild(buttonContainer);
-
+  analysisResults.appendChild(closeBtn);
   analysisResults.style.display = "block";
 }
