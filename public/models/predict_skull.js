@@ -91,7 +91,45 @@ async function generateMedicalAnalysis(condition) {
     return null;
   }
 }
+// Create button container
+const buttonContainer = document.createElement("div");
+buttonContainer.style.marginTop = "1rem";
+buttonContainer.style.display = "flex";
+buttonContainer.style.gap = "10px";
+buttonContainer.style.justifyContent = "center";
 
+// Download Report button
+const downloadBtn = document.createElement("button");
+downloadBtn.className = "btn btn-success";
+downloadBtn.innerText = "Download Report";
+downloadBtn.style.backgroundColor = "#28a745";
+downloadBtn.style.color = "white";
+downloadBtn.style.border = "none";
+downloadBtn.style.padding = "10px 20px";
+downloadBtn.style.borderRadius = "5px";
+downloadBtn.style.cursor = "pointer";
+downloadBtn.addEventListener("click", generatePDFReport);
+
+// Close button
+const closeBtn = document.createElement("button");
+closeBtn.className = "btn btn-primary";
+closeBtn.innerText = "Close";
+closeBtn.style.backgroundColor = "#007bff";
+closeBtn.style.color = "white";
+closeBtn.style.border = "none";
+closeBtn.style.padding = "10px 20px";
+closeBtn.style.borderRadius = "5px";
+closeBtn.style.cursor = "pointer";
+closeBtn.addEventListener("click", () => {
+  document.getElementById("upload-section").style.display = "none";
+});
+
+// Add buttons to container
+buttonContainer.appendChild(downloadBtn);
+buttonContainer.appendChild(closeBtn);
+analysisResults.appendChild(buttonContainer);
+
+analysisResults.style.display = "block";
 // predictions from uploaded image
 async function predictSkullFromUpload(imageElement) {
   const analysisResults = document.getElementById("analysis-results");
@@ -236,15 +274,43 @@ async function predictSkullFromUpload(imageElement) {
     }
   }
 
+  // Create button container
+  const buttonContainer = document.createElement("div");
+  buttonContainer.style.marginTop = "1rem";
+  buttonContainer.style.display = "flex";
+  buttonContainer.style.gap = "10px";
+  buttonContainer.style.justifyContent = "center";
+
+  // Download Report button
+  const downloadBtn = document.createElement("button");
+  downloadBtn.className = "btn btn-success";
+  downloadBtn.innerText = "Download Report";
+  downloadBtn.style.backgroundColor = "#28a745";
+  downloadBtn.style.color = "white";
+  downloadBtn.style.border = "none";
+  downloadBtn.style.padding = "10px 20px";
+  downloadBtn.style.borderRadius = "5px";
+  downloadBtn.style.cursor = "pointer";
+  downloadBtn.addEventListener("click", generatePDFReport);
+
+  // Close button
   const closeBtn = document.createElement("button");
   closeBtn.className = "btn btn-primary";
-  closeBtn.style.marginTop = "1rem";
-  closeBtn.id = "close-results-btn";
   closeBtn.innerText = "Close";
+  closeBtn.style.backgroundColor = "#007bff";
+  closeBtn.style.color = "white";
+  closeBtn.style.border = "none";
+  closeBtn.style.padding = "10px 20px";
+  closeBtn.style.borderRadius = "5px";
+  closeBtn.style.cursor = "pointer";
   closeBtn.addEventListener("click", () => {
     document.getElementById("upload-section").style.display = "none";
   });
 
-  analysisResults.appendChild(closeBtn);
+  // Add buttons to container
+  buttonContainer.appendChild(downloadBtn);
+  buttonContainer.appendChild(closeBtn);
+  analysisResults.appendChild(buttonContainer);
+
   analysisResults.style.display = "block";
 }
