@@ -92,6 +92,346 @@ async function generateMedicalAnalysis(condition) {
   }
 }
 
+function generatePDFReport() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Set up PDF styling
+  const pageWidth = doc.internal.pageSize.width;
+  const pageHeight = doc.internal.pageSize.height;
+  const margin = 20;
+  let yPosition = margin;
+
+  // Theme colors (you can adjust these to match your website theme)
+  const primaryBlue = [41, 128, 185]; // Header background
+  const accentBlue = [52, 152, 219]; // Section headers
+  const darkGray = [44, 62, 80]; // Main text
+  const lightGray = [236, 240, 241]; // Box backgrounds
+  const successGreen = [39, 174, 96]; // Low risk
+  const warningOrange = [230, 126, 34]; // Medium risk
+  const dangerRed = [231, 76, 60]; // High risk
+
+  // Header with professional styling
+  doc.setFillColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
+  doc.rect(0, 0, pageWidth, 40, "F");
+
+  // Main title
+  doc.setFontSize(24);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text("AI X-RAY ANALYSIS REPORT", pageWidth / 2, 22, { align: "center" });
+
+  // Subtitle
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  doc.text("Medical Image Analysis System", pageWidth / 2, 32, {
+    align: "center",
+  });
+
+  yPosition = 55;
+
+  // Patient/File Information Section
+  doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
+  doc.rect(margin, yPosition, pageWidth - 2 * margin, 35, "F");
+  doc.setDrawColor(200, 200, 200);
+  doc.rect(margin, yPosition, pageWidth - 2 * margin, 35, "S");
+
+  yPosition += 12;
+
+  // File information
+  const fileName =
+    document.getElementById("file-name-display")?.textContent || "Unknown File";
+  const currentDate = new Date().toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+  doc.text("File Name:", margin + 8, yPosition);
+  doc.setFont("helvetica", "normal");
+  doc.text(fileName, margin + 35, yPosition);
+
+  yPosition += 8;
+  doc.setFont("helvetica", "bold");
+  doc.text("Generated:", margin + 8, yPosition);
+  doc.setFont("helvetica", "normal");
+  doc.text(currentDate, margin + 35, yPosition);
+
+  yPosition += 8;
+  doc.setFont("helvetica", "bold");
+  doc.text("Report ID:", margin + 8, yPosition);
+  doc.setFont("helvetica", "normal");
+  doc.text(`XRA-${Date.now().toString().slice(-6)}`, margin + 35, yPosition);
+
+  yPosition += 30;
+
+  // Analysis Results Header
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+  doc.text("ANALYSIS RESULTS", margin, yPosition);
+
+  // Underline
+  doc.setLineWidth(2);
+  doc.setDrawColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+  doc.line(margin, yPosition + 3, margin + 65, yPosition + 3);
+
+  yPosition += 20;
+
+  // Get all result cards (excluding title card)
+  const resultCards = document.querySelectorAll(".result-card");
+  let analysisCount = 0;
+
+  resultCards.forEach((card, index) => {
+    // Skip the title card (first card)
+    if (index === 0) return;
+
+    analysisCount++;
+
+    // Extract condition name
+    const conditionHeader = card.querySelector("h3");
+    const conditionName = conditionHeader
+      ? conditionHeader.textContent
+      : "Unknown Condition";
+
+    // Extract confidence score
+    const confidenceText = card.textContent.match(/Confidence:\s*(\d+\.?\d*%)/);
+    const confidence = confidenceText ? confidenceText[1] : "N/A";
+    const confidenceNum = parseFloat(confidence);
+
+    // Extract analysis text
+    const analysisDiv = card.querySelector(`[id^="detailed-analysis-"]`);
+    let analysisText = "";
+    if (analysisDiv) {
+      analysisText = analysisDiv.textContent.trim();
+      analysisText = analysisText.replace(/<[^>]*>/g, "");
+    }
+
+    // Check if we need a new page
+    if (yPosition > pageHeight - 100) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    // Main condition section
+    const sectionHeight = 45;
+    doc.setFillColor(250, 250, 250);
+    doc.rect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, "F");
+    doc.setDrawColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+    doc.setLineWidth(1);
+    doc.rect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, "S");
+
+    yPosition += 15;
+
+    // Condition name (actual condition name instead of "Predicted Condition")
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
+    doc.text(`${analysisCount}. ${conditionName}`, margin + 8, yPosition);
+
+    yPosition += 12;
+
+    // Confidence and Risk Level on same line
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+    doc.text("Confidence:", margin + 8, yPosition);
+
+    // Confidence score with color
+    const confidenceColor =
+      confidenceNum >= 80
+        ? dangerRed
+        : confidenceNum >= 60
+        ? warningOrange
+        : successGreen;
+    doc.setTextColor(
+      confidenceColor[0],
+      confidenceColor[1],
+      confidenceColor[2]
+    );
+    doc.setFont("helvetica", "bold");
+    doc.text(confidence, margin + 35, yPosition);
+
+    // Risk level
+    const riskLevel =
+      confidenceNum >= 80
+        ? "HIGH RISK"
+        : confidenceNum >= 60
+        ? "MEDIUM RISK"
+        : "LOW RISK";
+    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+    doc.setFont("helvetica", "bold");
+    doc.text("Risk Level:", margin + 80, yPosition);
+    doc.setTextColor(
+      confidenceColor[0],
+      confidenceColor[1],
+      confidenceColor[2]
+    );
+    doc.text(riskLevel, margin + 115, yPosition);
+
+    yPosition += 35;
+
+    // Detailed Medical Analysis (only as heading, content removed)
+    if (analysisText) {
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+      doc.text("DETAILED MEDICAL ANALYSIS", margin, yPosition);
+      yPosition += 18;
+
+      // Parse and format analysis sections as bullet points
+      const sections = analysisText.split(
+        /(?=Common symptoms|Recommended diagnostic tests|Treatment options|Seek immediate)/i
+      );
+
+      sections.forEach((section) => {
+        if (!section.trim()) return;
+
+        // Check for page break
+        if (yPosition > pageHeight - 60) {
+          doc.addPage();
+          yPosition = margin;
+        }
+
+        // Extract section header and content
+        let sectionHeader = "";
+        let sectionContent = section.trim();
+
+        if (section.toLowerCase().includes("common symptoms")) {
+          sectionHeader = "Symptoms";
+          sectionContent = section.replace(/common symptoms:?/i, "").trim();
+        } else if (section.toLowerCase().includes("recommended diagnostic")) {
+          sectionHeader = "Diagnostic Tests";
+          sectionContent = section
+            .replace(/recommended diagnostic tests:?/i, "")
+            .trim();
+        } else if (section.toLowerCase().includes("treatment options")) {
+          sectionHeader = "Treatment Options";
+          sectionContent = section.replace(/treatment options:?/i, "").trim();
+        } else if (section.toLowerCase().includes("seek immediate")) {
+          sectionHeader = "Important Notice";
+          sectionContent = section.trim();
+        }
+
+        if (sectionHeader) {
+          // Section header (bold)
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(12);
+          doc.setTextColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+          doc.text(`${sectionHeader}:`, margin + 5, yPosition);
+          yPosition += 10;
+
+          // Process content as bullet points
+          const bulletPoints = sectionContent
+            .split(/\s*\*\s*/)
+            .filter((point) => point.trim());
+
+          if (bulletPoints.length > 1) {
+            // Remove first empty element if exists
+            bulletPoints.shift();
+
+            bulletPoints.forEach((point) => {
+              if (yPosition > pageHeight - 30) {
+                doc.addPage();
+                yPosition = margin;
+              }
+
+              doc.setFont("helvetica", "normal");
+              doc.setFontSize(10);
+              doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+
+              // Add bullet point
+              doc.text("•", margin + 10, yPosition);
+
+              const maxWidth = pageWidth - 2 * margin - 20;
+              const lines = doc.splitTextToSize(point.trim(), maxWidth);
+
+              lines.forEach((line, lineIndex) => {
+                if (yPosition > pageHeight - 25) {
+                  doc.addPage();
+                  yPosition = margin;
+                }
+                doc.text(line, margin + 15, yPosition);
+                yPosition += 5;
+              });
+              yPosition += 2;
+            });
+          } else {
+            // Regular paragraph format
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+
+            const maxWidth = pageWidth - 2 * margin - 10;
+            const lines = doc.splitTextToSize(sectionContent, maxWidth);
+
+            lines.forEach((line) => {
+              if (yPosition > pageHeight - 25) {
+                doc.addPage();
+                yPosition = margin;
+              }
+              doc.text(line, margin + 10, yPosition);
+              yPosition += 5;
+            });
+          }
+          yPosition += 8;
+        }
+      });
+    }
+
+    yPosition += 10;
+  });
+
+  // Professional Footer
+  if (yPosition > pageHeight - 50) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  const footerY = pageHeight - 40;
+
+  // Footer background
+  doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
+  doc.rect(0, footerY - 10, pageWidth, 50, "F");
+
+  // Disclaimer header
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
+  doc.text("⚠️ MEDICAL DISCLAIMER", pageWidth / 2, footerY, {
+    align: "center",
+  });
+
+  // Disclaimer text
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+  const disclaimerText =
+    "This is an AI-generated analysis for screening purposes only. Results should not be used for final medical diagnosis. Please consult a qualified medical professional for proper evaluation and treatment.";
+  const disclaimerLines = doc.splitTextToSize(
+    disclaimerText,
+    pageWidth - 2 * margin
+  );
+
+  let disclaimerY = footerY + 8;
+  disclaimerLines.forEach((line) => {
+    doc.text(line, pageWidth / 2, disclaimerY, { align: "center" });
+    disclaimerY += 4;
+  });
+
+  // Save the PDF
+  const reportFileName = `X-Ray_Analysis_Report_${
+    new Date().toISOString().split("T")[0]
+  }.pdf`;
+  doc.save(reportFileName);
+}
+
 // predictions from uploaded image
 async function predictSpineFromUpload(imageElement) {
   const analysisResults = document.getElementById("analysis-results");
@@ -236,15 +576,43 @@ async function predictSpineFromUpload(imageElement) {
     }
   }
 
+  // Create button container
+  const buttonContainer = document.createElement("div");
+  buttonContainer.style.marginTop = "1rem";
+  buttonContainer.style.display = "flex";
+  buttonContainer.style.gap = "10px";
+  buttonContainer.style.justifyContent = "center";
+
+  // Download Report button
+  const downloadBtn = document.createElement("button");
+  downloadBtn.className = "btn btn-success";
+  downloadBtn.innerText = "Download Report";
+  downloadBtn.style.backgroundColor = "#28a745";
+  downloadBtn.style.color = "white";
+  downloadBtn.style.border = "none";
+  downloadBtn.style.padding = "10px 20px";
+  downloadBtn.style.borderRadius = "5px";
+  downloadBtn.style.cursor = "pointer";
+  downloadBtn.addEventListener("click", generatePDFReport);
+
+  // Close button
   const closeBtn = document.createElement("button");
   closeBtn.className = "btn btn-primary";
-  closeBtn.style.marginTop = "1rem";
-  closeBtn.id = "close-results-btn";
   closeBtn.innerText = "Close";
+  closeBtn.style.backgroundColor = "#007bff";
+  closeBtn.style.color = "white";
+  closeBtn.style.border = "none";
+  closeBtn.style.padding = "10px 20px";
+  closeBtn.style.borderRadius = "5px";
+  closeBtn.style.cursor = "pointer";
   closeBtn.addEventListener("click", () => {
     document.getElementById("upload-section").style.display = "none";
   });
 
-  analysisResults.appendChild(closeBtn);
+  // Add buttons to container
+  buttonContainer.appendChild(downloadBtn);
+  buttonContainer.appendChild(closeBtn);
+  analysisResults.appendChild(buttonContainer);
+
   analysisResults.style.display = "block";
 }
