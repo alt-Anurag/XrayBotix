@@ -16,7 +16,7 @@ exports.handler = async (event) => {
     if (!condition) throw new Error("No condition received");
 
     const prompt = `
-      You are a medical assistant specializing in radiology. Provide a point-wise, concise yet comprehensive analysis of the condition "${condition}" detected in an X-ray image.
+      You are a medical assistant specializing in radiology. Provide a concise yet comprehensive analysis of the condition "${condition}" detected in an X-ray image.
 
       Your response should include:
       1. A brief explanation of the condition (1-2 sentences)
@@ -25,11 +25,11 @@ exports.handler = async (event) => {
       4. Treatment options (bullet points)
       5. When to seek immediate medical attention, and the right specialist/ doctor type to see (1 sentence)
 
-      Format your response in clear paragraphs with appropriate spacing. 
+      Format your response in clear bulletwise points with appropriate spacing. 
       Use medical terminology but keep it understandable for patients.
       Do not include any markdown formatting.
       Be factual and cite evidence-based medicine.
-      Limit the response to 200 words maximum.
+      Limit the response to 100 words maximum.
     `;
 
     const result = await model.generateContent(prompt);
