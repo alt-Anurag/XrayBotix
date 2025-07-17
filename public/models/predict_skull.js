@@ -8,7 +8,7 @@ async function initSkullModel() {
   const modelURL = SKULL_URL + "model.json";
   const metadataURL = SKULL_URL + "metadata.json";
   skullModel = await tmImage.load(modelURL, metadataURL);
-  skullMaxPredictions = model.getTotalClasses();
+  skullMaxPredictions = skullModel.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
