@@ -23,7 +23,7 @@ exports.handler = async (event) => {
       2. Common symptoms associated with this condition (bullet points)
       3. Recommended diagnostic tests (bullet points)
       4. Treatment options (bullet points)
-      5. When to seek immediate medical attention, and the right specialist/ doctor type to see (1 sentence)
+      5. When to seek immediate medical attention, and the right specialist/ doctor type to see at the very top first. (1 sentence)
 
       Format your response in clear paragraphs with appropriate spacing. 
       Use medical terminology but keep it understandable for patients.
