@@ -233,7 +233,7 @@ function generatePDFReport() {
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
-    doc.text(`${analysisCount}. ${conditionName}`, margin + 8, yPosition);
+    doc.text(`${analysisCount}. Predicted Condition: ${conditionName}`, margin + 8, yPosition);
 
     yPosition += 12;
 
