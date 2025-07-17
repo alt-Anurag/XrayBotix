@@ -1,5 +1,4 @@
 // Teachable Machine model URL
-const URL = "// Teachable Machine model URL
 const URL = "https://teachablemachine.withgoogle.com/models/CHMEJ5Ywr/";
 
 let model, maxPredictions;
