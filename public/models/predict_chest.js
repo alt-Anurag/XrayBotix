@@ -101,37 +101,39 @@ function generatePDFReport() {
     const margin = 20;
     let yPosition = margin;
     
-    // Colors
-    const primaryBlue = [41, 128, 185];
-    const darkGray = [52, 73, 94];
-    const lightGray = [149, 165, 166];
-    const successGreen = [39, 174, 96];
-    const warningRed = [231, 76, 60];
+    // Theme colors (you can adjust these to match your website theme)
+    const primaryBlue = [41, 128, 185];      // Header background
+    const accentBlue = [52, 152, 219];       // Section headers
+    const darkGray = [44, 62, 80];           // Main text
+    const lightGray = [236, 240, 241];       // Box backgrounds
+    const successGreen = [39, 174, 96];      // Low risk
+    const warningOrange = [230, 126, 34];    // Medium risk
+    const dangerRed = [231, 76, 60];         // High risk
     
-    // Header with logo area
+    // Header with professional styling
     doc.setFillColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-    doc.rect(0, 0, pageWidth, 35, 'F');
+    doc.rect(0, 0, pageWidth, 40, 'F');
     
     // Main title
-    doc.setFontSize(22);
+    doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(255, 255, 255);
-    doc.text('AI X-RAY ANALYSIS REPORT', pageWidth / 2, 20, { align: 'center' });
+    doc.text('AI X-RAY ANALYSIS REPORT', pageWidth / 2, 22, { align: 'center' });
     
     // Subtitle
-    doc.setFontSize(10);
+    doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
-    doc.text('Medical Image Analysis System', pageWidth / 2, 28, { align: 'center' });
+    doc.text('Medical Image Analysis System', pageWidth / 2, 32, { align: 'center' });
     
-    yPosition = 50;
+    yPosition = 55;
     
-    // Patient/File Information Box
-    doc.setFillColor(245, 245, 245);
-    doc.rect(margin, yPosition, pageWidth - 2 * margin, 30, 'F');
+    // Patient/File Information Section
+    doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
+    doc.rect(margin, yPosition, pageWidth - 2 * margin, 35, 'F');
     doc.setDrawColor(200, 200, 200);
-    doc.rect(margin, yPosition, pageWidth - 2 * margin, 30, 'S');
+    doc.rect(margin, yPosition, pageWidth - 2 * margin, 35, 'S');
     
-    yPosition += 10;
+    yPosition += 12;
     
     // File information
     const fileName = document.getElementById("file-name-display")?.textContent || "Unknown File";
@@ -147,34 +149,34 @@ function generatePDFReport() {
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-    doc.text('File Name:', margin + 5, yPosition);
+    doc.text('File Name:', margin + 8, yPosition);
     doc.setFont('helvetica', 'normal');
-    doc.text(fileName, margin + 30, yPosition);
+    doc.text(fileName, margin + 35, yPosition);
     
     yPosition += 8;
     doc.setFont('helvetica', 'bold');
-    doc.text('Generated:', margin + 5, yPosition);
+    doc.text('Generated:', margin + 8, yPosition);
     doc.setFont('helvetica', 'normal');
-    doc.text(currentDate, margin + 30, yPosition);
+    doc.text(currentDate, margin + 35, yPosition);
     
     yPosition += 8;
     doc.setFont('helvetica', 'bold');
-    doc.text('Report ID:', margin + 5, yPosition);
+    doc.text('Report ID:', margin + 8, yPosition);
     doc.setFont('helvetica', 'normal');
-    doc.text(`XRA-${Date.now().toString().slice(-6)}`, margin + 30, yPosition);
+    doc.text(`XRA-${Date.now().toString().slice(-6)}`, margin + 35, yPosition);
     
-    yPosition += 25;
+    yPosition += 30;
     
     // Analysis Results Header
-    doc.setFontSize(16);
+    doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
+    doc.setTextColor(accentBlue[0], accentBlue[1], accentBlue[2]);
     doc.text('ANALYSIS RESULTS', margin, yPosition);
     
     // Underline
     doc.setLineWidth(2);
-    doc.setDrawColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-    doc.line(margin, yPosition + 3, margin + 60, yPosition + 3);
+    doc.setDrawColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+    doc.line(margin, yPosition + 3, margin + 65, yPosition + 3);
     
     yPosition += 20;
     
@@ -206,163 +208,184 @@ function generatePDFReport() {
         }
         
         // Check if we need a new page
-        if (yPosition > pageHeight - 80) {
+        if (yPosition > pageHeight - 100) {
             doc.addPage();
             yPosition = margin;
         }
         
-        // Condition box
-        const boxHeight = 50;
+        // Main condition section
+        const sectionHeight = 45;
         doc.setFillColor(250, 250, 250);
-        doc.rect(margin, yPosition, pageWidth - 2 * margin, boxHeight, 'F');
-        doc.setDrawColor(220, 220, 220);
-        doc.rect(margin, yPosition, pageWidth - 2 * margin, boxHeight, 'S');
-        
-        yPosition += 12;
-        
-        // Condition number and name
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(warningRed[0], warningRed[1], warningRed[2]);
-        doc.text(`${analysisCount}. ${conditionName}`, margin + 5, yPosition);
-        
-        yPosition += 12;
-        
-        // Confidence score with color coding
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-        doc.text('Confidence Level:', margin + 5, yPosition);
-        
-        // Color code confidence
-        const confidenceColor = confidenceNum >= 80 ? successGreen : 
-                               confidenceNum >= 60 ? [243, 156, 18] : warningRed;
-        doc.setTextColor(confidenceColor[0], confidenceColor[1], confidenceColor[2]);
-        doc.setFont('helvetica', 'bold');
-        doc.text(confidence, margin + 45, yPosition);
-        
-        // Confidence bar
-        const barWidth = 60;
-        const barHeight = 4;
-        const barX = margin + 80;
-        const barY = yPosition - 3;
-        
-        // Background bar
-        doc.setFillColor(230, 230, 230);
-        doc.rect(barX, barY, barWidth, barHeight, 'F');
-        
-        // Confidence bar fill
-        doc.setFillColor(confidenceColor[0], confidenceColor[1], confidenceColor[2]);
-        doc.rect(barX, barY, (barWidth * confidenceNum) / 100, barHeight, 'F');
+        doc.rect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 'F');
+        doc.setDrawColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+        doc.setLineWidth(1);
+        doc.rect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 'S');
         
         yPosition += 15;
         
-        // Risk level indicator
-        const riskLevel = confidenceNum >= 80 ? 'HIGH' : confidenceNum >= 60 ? 'MEDIUM' : 'LOW';
-        const riskColor = confidenceNum >= 80 ? warningRed : confidenceNum >= 60 ? [243, 156, 18] : successGreen;
+        // Condition name (actual condition name instead of "Predicted Condition")
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
+        doc.text(`${analysisCount}. ${conditionName}`, margin + 8, yPosition);
         
-        doc.setFontSize(9);
+        yPosition += 12;
+        
+        // Confidence and Risk Level on same line
+        doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-        doc.text('Risk Level:', margin + 5, yPosition);
-        doc.setTextColor(riskColor[0], riskColor[1], riskColor[2]);
-        doc.text(riskLevel, margin + 30, yPosition);
+        doc.text('Confidence:', margin + 8, yPosition);
         
-        yPosition += 25;
+        // Confidence score with color
+        const confidenceColor = confidenceNum >= 80 ? dangerRed : 
+                               confidenceNum >= 60 ? warningOrange : successGreen;
+        doc.setTextColor(confidenceColor[0], confidenceColor[1], confidenceColor[2]);
+        doc.setFont('helvetica', 'bold');
+        doc.text(confidence, margin + 35, yPosition);
         
-        // Analysis details header
+        // Risk level
+        const riskLevel = confidenceNum >= 80 ? 'HIGH RISK' : 
+                         confidenceNum >= 60 ? 'MEDIUM RISK' : 'LOW RISK';
+        doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Risk Level:', margin + 80, yPosition);
+        doc.setTextColor(confidenceColor[0], confidenceColor[1], confidenceColor[2]);
+        doc.text(riskLevel, margin + 115, yPosition);
+        
+        yPosition += 35;
+        
+        // Detailed Medical Analysis (only as heading, content removed)
         if (analysisText) {
-            doc.setFontSize(13);
+            doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-            doc.text('Detailed Medical Analysis', margin, yPosition);
-            yPosition += 15;
+            doc.setTextColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+            doc.text('DETAILED MEDICAL ANALYSIS', margin, yPosition);
+            yPosition += 18;
             
-            // Analysis content box
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-            
-            // Parse analysis sections
-            const sections = analysisText.split(/(?=Symptoms:|Diagnostic Tests:|Treatment Options:|Seek immediate)/);
+            // Parse and format analysis sections as bullet points
+            const sections = analysisText.split(/(?=Common symptoms|Recommended diagnostic tests|Treatment options|Seek immediate)/i);
             
             sections.forEach(section => {
                 if (!section.trim()) return;
                 
                 // Check for page break
-                if (yPosition > pageHeight - 40) {
+                if (yPosition > pageHeight - 60) {
                     doc.addPage();
                     yPosition = margin;
                 }
                 
-                // Section header
-                const headerMatch = section.match(/^(Symptoms|Diagnostic Tests|Treatment Options|Seek immediate):/);
-                if (headerMatch) {
-                    doc.setFont('helvetica', 'bold');
-                    doc.setFontSize(11);
-                    doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-                    doc.text(headerMatch[1] + ':', margin + 5, yPosition);
-                    yPosition += 8;
-                    
-                    // Content
-                    const content = section.replace(/^[^:]*:/, '').trim();
-                    doc.setFont('helvetica', 'normal');
-                    doc.setFontSize(10);
-                    doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
-                    
-                    const maxWidth = pageWidth - 2 * margin - 10;
-                    const lines = doc.splitTextToSize(content, maxWidth);
-                    
-                    lines.forEach(line => {
-                        if (yPosition > pageHeight - 25) {
-                            doc.addPage();
-                            yPosition = margin;
-                        }
-                        doc.text(line, margin + 10, yPosition);
-                        yPosition += 5;
-                    });
-                    yPosition += 5;
-                } else {
-                    // Regular content
-                    const maxWidth = pageWidth - 2 * margin - 10;
-                    const lines = doc.splitTextToSize(section.trim(), maxWidth);
-                    
-                    lines.forEach(line => {
-                        if (yPosition > pageHeight - 25) {
-                            doc.addPage();
-                            yPosition = margin;
-                        }
-                        doc.text(line, margin + 10, yPosition);
-                        yPosition += 5;
-                    });
+                // Extract section header and content
+                let sectionHeader = '';
+                let sectionContent = section.trim();
+                
+                if (section.toLowerCase().includes('common symptoms')) {
+                    sectionHeader = 'Symptoms';
+                    sectionContent = section.replace(/common symptoms:?/i, '').trim();
+                } else if (section.toLowerCase().includes('recommended diagnostic')) {
+                    sectionHeader = 'Diagnostic Tests';
+                    sectionContent = section.replace(/recommended diagnostic tests:?/i, '').trim();
+                } else if (section.toLowerCase().includes('treatment options')) {
+                    sectionHeader = 'Treatment Options';
+                    sectionContent = section.replace(/treatment options:?/i, '').trim();
+                } else if (section.toLowerCase().includes('seek immediate')) {
+                    sectionHeader = 'Important Notice';
+                    sectionContent = section.trim();
                 }
-                yPosition += 5;
+                
+                if (sectionHeader) {
+                    // Section header (bold)
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(12);
+                    doc.setTextColor(accentBlue[0], accentBlue[1], accentBlue[2]);
+                    doc.text(`${sectionHeader}:`, margin + 5, yPosition);
+                    yPosition += 10;
+                    
+                    // Process content as bullet points
+                    const bulletPoints = sectionContent.split(/\s*\*\s*/).filter(point => point.trim());
+                    
+                    if (bulletPoints.length > 1) {
+                        // Remove first empty element if exists
+                        bulletPoints.shift();
+                        
+                        bulletPoints.forEach(point => {
+                            if (yPosition > pageHeight - 30) {
+                                doc.addPage();
+                                yPosition = margin;
+                            }
+                            
+                            doc.setFont('helvetica', 'normal');
+                            doc.setFontSize(10);
+                            doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+                            
+                            // Add bullet point
+                            doc.text('•', margin + 10, yPosition);
+                            
+                            const maxWidth = pageWidth - 2 * margin - 20;
+                            const lines = doc.splitTextToSize(point.trim(), maxWidth);
+                            
+                            lines.forEach((line, lineIndex) => {
+                                if (yPosition > pageHeight - 25) {
+                                    doc.addPage();
+                                    yPosition = margin;
+                                }
+                                doc.text(line, margin + 15, yPosition);
+                                yPosition += 5;
+                            });
+                            yPosition += 2;
+                        });
+                    } else {
+                        // Regular paragraph format
+                        doc.setFont('helvetica', 'normal');
+                        doc.setFontSize(10);
+                        doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
+                        
+                        const maxWidth = pageWidth - 2 * margin - 10;
+                        const lines = doc.splitTextToSize(sectionContent, maxWidth);
+                        
+                        lines.forEach(line => {
+                            if (yPosition > pageHeight - 25) {
+                                doc.addPage();
+                                yPosition = margin;
+                            }
+                            doc.text(line, margin + 10, yPosition);
+                            yPosition += 5;
+                        });
+                    }
+                    yPosition += 8;
+                }
             });
         }
         
-        yPosition += 15;
+        yPosition += 10;
     });
     
-    // Footer
-    const footerY = pageHeight - 30;
+    // Professional Footer
+    if (yPosition > pageHeight - 50) {
+        doc.addPage();
+        yPosition = margin;
+    }
+    
+    const footerY = pageHeight - 40;
     
     // Footer background
-    doc.setFillColor(240, 240, 240);
-    doc.rect(0, footerY - 5, pageWidth, 35, 'F');
+    doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
+    doc.rect(0, footerY - 10, pageWidth, 50, 'F');
     
-    // Disclaimer
-    doc.setFontSize(9);
+    // Disclaimer header
+    doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(warningRed[0], warningRed[1], warningRed[2]);
-    doc.text('⚠️ MEDICAL DISCLAIMER', pageWidth / 2, footerY + 5, { align: 'center' });
+    doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
+    doc.text('⚠️ MEDICAL DISCLAIMER', pageWidth / 2, footerY, { align: 'center' });
     
-    doc.setFontSize(8);
+    // Disclaimer text
+    doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(darkGray[0], darkGray[1], darkGray[2]);
     const disclaimerText = 'This is an AI-generated analysis for screening purposes only. Results should not be used for final medical diagnosis. Please consult a qualified medical professional for proper evaluation and treatment.';
     const disclaimerLines = doc.splitTextToSize(disclaimerText, pageWidth - 2 * margin);
     
-    let disclaimerY = footerY + 12;
+    let disclaimerY = footerY + 8;
     disclaimerLines.forEach(line => {
         doc.text(line, pageWidth / 2, disclaimerY, { align: 'center' });
         disclaimerY += 4;
@@ -372,6 +395,7 @@ function generatePDFReport() {
     const reportFileName = `X-Ray_Analysis_Report_${new Date().toISOString().split('T')[0]}.pdf`;
     doc.save(reportFileName);
 }
+
 
 // predictions from uploaded image
 async function predictChestFromUpload(imageElement) {
