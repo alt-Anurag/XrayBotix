@@ -194,10 +194,12 @@ function generatePDFReport() {
 
     analysisCount++;
 
-    // Extract condition name
-    const conditionHeader = card.querySelector("h3");
-    const conditionName = conditionHeader
-      ? conditionHeader.textContent
+    // Extract condition name from the blue text paragraph
+    const conditionNameElement = card.querySelector(
+      "p[style*='color: #58a6ff']"
+    );
+    const conditionName = conditionNameElement
+      ? conditionNameElement.textContent
       : "Unknown Condition";
 
     // Extract confidence score
@@ -233,7 +235,11 @@ function generatePDFReport() {
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
-    doc.text(`${analysisCount}. Predicted Condition: ${conditionName}`, margin + 8, yPosition);
+    doc.text(
+      `${analysisCount}. Predicted Condition: ${conditionName}`,
+      margin + 8,
+      yPosition
+    );
 
     yPosition += 12;
 
