@@ -16,7 +16,7 @@ exports.handler = async (event) => {
     if (!condition) throw new Error("No condition received");
 
     const prompt = `
-      You are a medical assistant specializing in radiology. Provide a concise yet comprehensive analysis of the condition "${condition}" detected in an X-ray image.
+      You are a medical assistant specializing in radiology. Provide a point-wise, concise yet comprehensive analysis of the condition "${condition}" detected in an X-ray image.
 
       Your response should include:
       1. A brief explanation of the condition (1-2 sentences)
