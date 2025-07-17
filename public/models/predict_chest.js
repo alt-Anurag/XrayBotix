@@ -124,7 +124,6 @@ async function predictChestFromUpload(imageElement) {
   if (!model) await initChestModel();
   const predictions = await model.predict(imageElement);
 
-  // We delay clearing and showing results until AFTER loading is done
   analysisResults.innerHTML = "";
   loadingSpinner.style.display = "none";
   analysisResults.style.display = "block"; // only show once ready
