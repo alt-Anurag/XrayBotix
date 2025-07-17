@@ -118,12 +118,16 @@ async function predictChestFromUpload(imageElement) {
 
   previewBox.style.display = "none";
   loadingSpinner.style.display = "block";
+  analysisResults.style.display = "none"; 
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
   if (!model) await initChestModel();
   const predictions = await model.predict(imageElement);
-  loadingSpinner.style.display = "none";
+
+  // We delay clearing and showing results until AFTER loading is done
   analysisResults.innerHTML = "";
+  loadingSpinner.style.display = "none";
+  analysisResults.style.display = "block"; // only show once ready
 
   const fileName =
     document.getElementById("file-name-display")?.textContent || "";
