@@ -8,7 +8,7 @@ async function initDentalModel() {
   const modelURL = DENTAL_URL + "model.json";
   const metadataURL = DENTAL_URL + "metadata.json";
   dentalModel = await tmImage.load(modelURL, metadataURL);
-  dentalMaxPredictions = model.getTotalClasses();
+  dentalMaxPredictions = dentalModel.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
