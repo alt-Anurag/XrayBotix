@@ -1,10 +1,10 @@
 // Teachable Machine model URL
-const URL = "https://teachablemachine.withgoogle.com/models/8vZGuj_dj/";
+const URL = "https://teachablemachine.withgoogle.com/models/c6n0-OhWN/";
 
 let model, maxPredictions;
 
 // load model
-async function initSpineModel() {
+async function initDentalModel() {
   const modelURL = URL + "model.json";
   const metadataURL = URL + "metadata.json";
   model = await tmImage.load(modelURL, metadataURL);
@@ -93,7 +93,7 @@ async function generateMedicalAnalysis(condition) {
 }
 
 // predictions from uploaded image
-async function predictSpineFromUpload(imageElement) {
+async function predictDentalFromUpload(imageElement) {
   const analysisResults = document.getElementById("analysis-results");
   const loadingSpinner = document.getElementById("loading-spinner");
   const previewBox = document.getElementById("preview-box");
@@ -107,7 +107,7 @@ async function predictSpineFromUpload(imageElement) {
     message.className = "result-card";
     message.innerHTML = `
       <h3 style="color: #f97316;">⚠️ Invalid Image</h3>
-      <p>This image does not appear to be a spinal X-ray. Please upload a proper grayscale X-ray image.</p>
+      <p>This image does not appear to be a dental X-ray. Please upload a proper grayscale X-ray image.</p>
       <button class="btn btn-primary" style="margin-top: 1rem;" onclick="document.getElementById('upload-section').style.display = 'none';">Try Again</button>
     `;
     analysisResults.appendChild(message);
@@ -121,7 +121,7 @@ async function predictSpineFromUpload(imageElement) {
   analysisResults.style.display = "none";
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
-  if (!model) await initSpineModel();
+  if (!model) await initDentalModel();
   const predictions = await model.predict(imageElement);
 
   analysisResults.innerHTML = "";
