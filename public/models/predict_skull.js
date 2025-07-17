@@ -161,6 +161,7 @@ async function predictSkullFromUpload(imageElement) {
 
   topToShow = topToShow.filter((pred) => pred.probability > 0.05);
 
+  // Function to generate medical analysis from Gemini API
   const generateMedicalAnalysis = async (condition) => {
     try {
       const response = await fetch("/.netlify/functions/analysis-generator", {
@@ -183,10 +184,12 @@ async function predictSkullFromUpload(imageElement) {
     }
   };
 
+  // Process each prediction and generate analysis
   for (const pred of topToShow) {
     const resultCard = document.createElement("div");
     resultCard.className = "result-card";
 
+    // Initial result card with loading state
     resultCard.innerHTML = `
       <h3>Predicted Condition</h3>
       <p style="color: #58a6ff; font-weight: 600;">${pred.className}</p>
@@ -195,9 +198,10 @@ async function predictSkullFromUpload(imageElement) {
         /\s+/g,
         "-"
       )}" class="loading-spinner-small">
-        <i class="fas fa-spinner fa-spin" style="font-size: 18px;"></i>
-        <p>Generating detailed analysis...</p>
-      </div>
+  <i class="fas fa-spinner fa-spin" style="font-size: 18px;"></i>
+  <p>Generating detailed analysis...</p>
+</div>
+
       <div id="detailed-analysis-${pred.className.replace(
         /\s+/g,
         "-"
@@ -207,6 +211,7 @@ async function predictSkullFromUpload(imageElement) {
 
     analysisResults.appendChild(resultCard);
 
+    // Generate and display detailed analysis
     const analysis = await generateMedicalAnalysis(pred.className);
     const loadingElement = document.getElementById(
       `analysis-loading-${pred.className.replace(/\s+/g, "-")}`
@@ -243,4 +248,3 @@ async function predictSkullFromUpload(imageElement) {
   analysisResults.appendChild(closeBtn);
   analysisResults.style.display = "block";
 }
-window.predictSkullFromUpload = predictSkullFromUpload;

@@ -107,7 +107,7 @@ async function predictSpineFromUpload(imageElement) {
     message.className = "result-card";
     message.innerHTML = `
       <h3 style="color: #f97316;">⚠️ Invalid Image</h3>
-      <p>This image does not appear to be a Spine X-ray. Please upload a proper grayscale X-ray image.</p>
+      <p>This image does not appear to be a spine X-ray. Please upload a proper grayscale X-ray image.</p>
       <button class="btn btn-primary" style="margin-top: 1rem;" onclick="document.getElementById('upload-section').style.display = 'none';">Try Again</button>
     `;
     analysisResults.appendChild(message);
