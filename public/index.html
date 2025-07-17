@@ -55,6 +55,20 @@
             --border-color: rgba(255, 255, 255, 0.1);
         }
 
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838 !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3 !important;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -1623,7 +1637,7 @@
     <!-- loading imp libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- sourcing tm model .js code -->
     <script src="/models/predict_chest.js"></script>
