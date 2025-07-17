@@ -213,23 +213,29 @@ function generatePDFReport() {
             yPosition = margin;
         }
         
-        // Main condition section
-        const sectionHeight = 45;
+        // Main condition section with enhanced styling
+        const sectionHeight = 50;
         doc.setFillColor(250, 250, 250);
         doc.rect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 'F');
         doc.setDrawColor(accentBlue[0], accentBlue[1], accentBlue[2]);
         doc.setLineWidth(1);
         doc.rect(margin, yPosition, pageWidth - 2 * margin, sectionHeight, 'S');
         
-        yPosition += 15;
+        yPosition += 18;
         
-        // Condition name (actual condition name instead of "Predicted Condition")
-        doc.setFontSize(16);
+        // Condition name - BOLD and prominent
+        doc.setFontSize(18);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(dangerRed[0], dangerRed[1], dangerRed[2]);
         doc.text(`${analysisCount}. ${conditionName}`, margin + 8, yPosition);
         
-        yPosition += 12;
+        // Add subtle underline for emphasis
+        doc.setLineWidth(0.8);
+        doc.setDrawColor(dangerRed[0], dangerRed[1], dangerRed[2]);
+        const conditionTextWidth = doc.getTextWidth(`${analysisCount}. ${conditionName}`);
+        doc.line(margin + 8, yPosition + 2, margin + 8 + conditionTextWidth, yPosition + 2);
+        
+        yPosition += 15;
         
         // Confidence and Risk Level on same line
         doc.setFontSize(12);
@@ -395,6 +401,7 @@ function generatePDFReport() {
     const reportFileName = `X-Ray_Analysis_Report_${new Date().toISOString().split('T')[0]}.pdf`;
     doc.save(reportFileName);
 }
+
 
 
 // predictions from uploaded image
