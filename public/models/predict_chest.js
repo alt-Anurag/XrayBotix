@@ -8,7 +8,7 @@ async function initChestModel() {
   const modelURL = CHEST_URL + "model.json";
   const metadataURL = CHEST_URL + "metadata.json";
   chestModel = await tmImage.load(modelURL, metadataURL);
-  chestMaxPredictions = model.getTotalClasses();
+  chestMaxPredictions = chestModel.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
