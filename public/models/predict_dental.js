@@ -243,3 +243,4 @@ async function predictDentalFromUpload(imageElement) {
   analysisResults.appendChild(closeBtn);
   analysisResults.style.display = "block";
 }
+window.predictDentalFromUpload = predictDentalFromUpload;

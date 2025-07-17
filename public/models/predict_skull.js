@@ -243,3 +243,4 @@ async function predictSkullFromUpload(imageElement) {
   analysisResults.appendChild(closeBtn);
   analysisResults.style.display = "block";
 }
+window.predictSkullFromUpload = predictSkullFromUpload;

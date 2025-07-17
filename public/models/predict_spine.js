@@ -497,3 +497,4 @@ async function predictSpineFromUpload(imageElement) {
   analysisResults.appendChild(closeBtn);
   analysisResults.style.display = "block";
 }
+window.predictSpineFromUpload = predictSpineFromUpload;
