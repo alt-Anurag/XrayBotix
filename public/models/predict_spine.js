@@ -1,14 +1,14 @@
 // Teachable Machine model URL
-const URL = "https://teachablemachine.withgoogle.com/models/8vZGuj_dj/";
+const SPINE_URL = "https://teachablemachine.withgoogle.com/models/8vZGuj_dj/";
 
-let model, maxPredictions;
+let spineModel, spineMaxPredictions;
 
 // load model
 async function initSpineModel() {
-  const modelURL = URL + "model.json";
-  const metadataURL = URL + "metadata.json";
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
+  const modelURL = SPINE_URL + "model.json";
+  const metadataURL = SPINE_URL + "metadata.json";
+  spineModel = await tmImage.load(modelURL, metadataURL);
+  spineMaxPredictions = spineModel.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
@@ -121,8 +121,8 @@ async function predictSpineFromUpload(imageElement) {
   analysisResults.style.display = "none";
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
-  if (!model) await initSpineModel();
-  const predictions = await model.predict(imageElement);
+  if (!spineModel) await initSpineModel();
+  const predictions = await spineModel.predict(imageElement);
 
   analysisResults.innerHTML = "";
   loadingSpinner.style.display = "none";

@@ -1,14 +1,14 @@
 // Teachable Machine model URL
-const URL = "https://teachablemachine.withgoogle.com/models/CHMEJ5Ywr/";
+const CHEST_URL = "https://teachablemachine.withgoogle.com/models/CHMEJ5Ywr/";
 
-let model, maxPredictions;
+let chestModel, chestMaxPredictions;
 
 // load model
 async function initChestModel() {
-  const modelURL = URL + "model.json";
-  const metadataURL = URL + "metadata.json";
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
+  const modelURL = CHEST_URLURL + "model.json";
+  const metadataURL = CHEST_URL + "metadata.json";
+  chestModel = await tmImage.load(modelURL, metadataURL);
+  chestMaxPredictions = model.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
@@ -121,8 +121,8 @@ async function predictChestFromUpload(imageElement) {
   analysisResults.style.display = "none";
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
-  if (!model) await initChestModel();
-  const predictions = await model.predict(imageElement);
+  if (!chestModel) await initChestModel();
+  const predictions = await chestModel.predict(imageElement);
 
   analysisResults.innerHTML = "";
   loadingSpinner.style.display = "none";

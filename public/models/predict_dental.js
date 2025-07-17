@@ -1,14 +1,14 @@
 // Teachable Machine model URL
-const URL = "https://teachablemachine.withgoogle.com/models/c6n0-OhWN/";
+const DENTAL_URL = "https://teachablemachine.withgoogle.com/models/c6n0-OhWN/";
 
-let model, maxPredictions;
+let dentalModel, dentalMaxPredictions;
 
 // load model
 async function initDentalModel() {
-  const modelURL = URL + "model.json";
-  const metadataURL = URL + "metadata.json";
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
+  const modelURL = DENTAL_URL + "model.json";
+  const metadataURL = DENTAL_URL + "metadata.json";
+  dentalModel = await tmImage.load(modelURL, metadataURL);
+  dentalMaxPredictions = model.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
@@ -121,8 +121,8 @@ async function predictDentalFromUpload(imageElement) {
   analysisResults.style.display = "none";
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
-  if (!model) await initDentalModel();
-  const predictions = await model.predict(imageElement);
+  if (!dentalModel) await initDentalModel();
+  const predictions = await dentalModel.predict(imageElement);
 
   analysisResults.innerHTML = "";
   loadingSpinner.style.display = "none";

@@ -1,14 +1,14 @@
 // Teachable Machine model URL
-const URL = "https://teachablemachine.withgoogle.com/models/4cYJUrTnl/";
+const SKULL_URL = "https://teachablemachine.withgoogle.com/models/4cYJUrTnl/";
 
-let model, maxPredictions;
+let skullModel, skullMaxPredictions;
 
 // load model
 async function initSkullModel() {
-  const modelURL = URL + "model.json";
-  const metadataURL = URL + "metadata.json";
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
+  const modelURL = SKULL_URL + "model.json";
+  const metadataURL = SKULL_URL + "metadata.json";
+  skullModel = await tmImage.load(modelURL, metadataURL);
+  skullMaxPredictions = model.getTotalClasses();
 }
 
 // advanced grayscale + brightness + contrast filter
@@ -121,8 +121,8 @@ async function predictSkullFromUpload(imageElement) {
   analysisResults.style.display = "none";
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
-  if (!model) await initSkullModel();
-  const predictions = await model.predict(imageElement);
+  if (!skullModel) await initSkullModel();
+  const predictions = await skullModel.predict(imageElement);
 
   analysisResults.innerHTML = "";
   loadingSpinner.style.display = "none";
