@@ -94,7 +94,7 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 
 ### **1. Image Quality Validation**
 **Challenge**: Ensuring uploaded images are actual X-rays and not random photos.
-**Solution**: 
+-**Solution**: 
 - Implemented advanced grayscale analysis algorithm.
 - Brightness and contrast validation (luminance 50-190, contrast ≥25).
 - Minimum resolution requirements (128x128 pixels).
@@ -102,7 +102,7 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 
 ### **2. Model Accuracy & Reliability**
 **Challenge**: Achieving consistent diagnostic accuracy across different X-ray types.
-**Solution**:
+-**Solution**:
 - Deployed multiple specialized models for different anatomical regions.
 - Implemented confidence thresholding (60% minimum for reporting).
 - Added probability-based filtering to show only relevant predictions.
@@ -110,7 +110,7 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 
 ### **3. Medical Report Generation**
 **Challenge**: Creating clinically relevant, evidence-based medical reports.
-**Solution**:
+-**Solution**:
 - Integrated Google Gemini API for natural language generation.
 - Structured prompts with medical terminology requirements.
 - Limited response length (200 words) for concise reporting.
@@ -118,7 +118,7 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 
 ### **5. Cross-Browser Compatibility**
 **Challenge**: Ensuring consistent functionality across different browsers and devices.
-**Solution**:
+-**Solution**:
 - Progressive enhancement approach.
 - Polyfills for older browser support.
 - Responsive design for mobile compatibility.
@@ -126,7 +126,7 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 
 ### **6. Performance Optimization**
 **Challenge**: Loading large AI models while maintaining fast user experience.
-**Solution**:
+-**Solution**:
 - Lazy loading of AI models (loaded only when needed).
 - Model caching for subsequent uses.
 - Optimized image preprocessing.
