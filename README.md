@@ -365,6 +365,8 @@ We welcome contributions from the medical and technical communities:
 ### **Development Team**
 - **Anurag Kumar Jha** - Lead Developer - [GitHub](https://github.com/alt-Anurag)
 - **Shivam Kumar** - Co-Developer - [GitHub](https://github.com/Err-rr)
+- **Monu Pathak** - Data Analysis and Model Trainer - [GitHub](https://github.com/monupathak-65)
+- **Rahul Kumar Gupta** - Data Analysis and Model Trainer - [GitHub](https://github.com/)
 
 ### **Support Channels**
 - **Technical Issues**: Create an issue on GitHub
@@ -391,12 +393,6 @@ We welcome contributions from the medical and technical communities:
 - HIPAA compliance for healthcare data protection
 - International medical imaging standards adherence
 - Regular security audits and compliance verification
-
----
-
-## 📄 License
-
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
