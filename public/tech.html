@@ -90,6 +90,24 @@
             overflow-x: hidden;
         }
 
+        .step-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .step-wrapper.right {
+            justify-content: flex-end;
+        }
+
+        /* Control step-card width for consistency */
+        .step-card {
+            width: 90%;
+            max-width: 1100px;
+            /* or whatever width matches others */
+        }
+
         .fixed-background-gradient {
             position: fixed;
             top: 0;
@@ -430,6 +448,21 @@
             display: none;
         }
 
+        .process-step.step-even {
+            flex-direction: row-reverse;
+        }
+
+        .process-step.step-even .step-card {
+            transform: translateX(100px);
+            animation: slideInRight 0.8s ease forwards;
+        }
+
+        /* Optional: ensure animation delay is preserved */
+        .process-step.step-even .step-card {
+            animation-delay: 1.2s;
+        }
+
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .tech-hero h1 {
@@ -653,6 +686,23 @@
                 transform: translateY(-120vh) scale(var(--scale));
                 opacity: 0;
             }
+
+            .process-step:nth-child(6) {
+                flex-direction: row-reverse;
+            }
+
+            .process-step.step-even .step-card {
+                transform: translateX(100px);
+                animation: slideInRight 0.8s ease forwards;
+            }
+
+            .process-step.step-even {
+                flex-direction: row-reverse;
+            }
+
+            .process-step.step-even:nth-child(6) .step-card {
+                animation-delay: 1.2s;
+            }
     </style>
 </head>
 
@@ -791,23 +841,29 @@
 
             <!-- Step 6: Results & Analysis -->
             <div class="process-step">
-                <div class="step-card">
-                    <div class="step-number">6</div>
-                    <div class="step-icon">
-                        <i class="fas fa-chart-line"></i>
+                <div class="step-wrapper right"> <!-- NEW WRAPPER -->
+                    <div class="step-card">
+                        <div class="step-number">6</div>
+                        <div class="step-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="step-title">Results & Analysis</h3>
+                        <p class="step-description">
+                            Final analysis with confidence scores, detailed medical reports, and specialist
+                            recommendations.
+                            Interactive visualizations and downloadable reports.
+                        </p>
+                        <div class="step-features">
+                            <span class="feature-badge">Confidence Scoring</span>
+                            <span class="feature-badge">Specialist Referral</span>
+                            <span class="feature-badge">Download Reports</span>
+                        </div>
                     </div>
-                    <h3 class="step-title">Results & Analysis</h3>
-                    <p class="step-description">
-                        Final analysis with confidence scores, detailed medical reports, and specialist recommendations.
-                        Interactive visualizations and downloadable reports.
-                    </p>
-                    <div class="step-features">
-                        <span class="feature-badge">Confidence Scoring</span>
-                        <span class="feature-badge">Specialist Referral</span>
-                        <span class="feature-badge">Download Reports</span>
-                    </div>
+                    <!-- No arrow here since it's last -->
                 </div>
             </div>
+
+
         </div>
     </div>
 
