@@ -1,7 +1,5 @@
 # XrayBotix 🔬🤖
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://xraybotix.netlify.app/)
-[![License](https://img.shields.io/badge/license-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![JavaScript](https://img.shields.io/badge/language-JavaScript-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![HTML](https://img.shields.io/badge/language-HTML-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
