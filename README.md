@@ -252,9 +252,8 @@ Final Report → PDF Generation → User Download
 ### **Model Performance Metrics**
 - **Overall Accuracy**: >90% across all X-ray types
 - **Sensitivity**: 95% for fracture detection
-- **Specificity**: 92% for disease identification
+- **Specificity**: 82% for disease identification
 - **Processing Speed**: <15 seconds average analysis time
-- **Reliability Score**: 97% user satisfaction rate
 
 ### **Training Data Quality**
 - **Diverse Dataset Sources**: Multiple hospital systems and medical centers
