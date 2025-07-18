@@ -16,13 +16,13 @@ XrayBotix is an innovative AI-powered medical imaging analysis platform that rev
 
 Traditional X-ray analysis faces several critical challenges:
 
-- **Time-consuming manual interpretation**: Radiologists require extensive time to analyze and report findings
-- **Human error susceptibility**: Fatigue and oversight can lead to missed diagnoses or misinterpretations
-- **Limited accessibility**: Shortage of qualified radiologists, especially in remote areas
-- **Inconsistent accuracy**: Diagnostic accuracy varies based on practitioner experience and expertise
-- **Delayed diagnosis**: Extended waiting times for radiology reports can delay critical treatment decisions
-- **High costs**: Manual analysis requires expensive specialist consultations
-- **Scalability issues**: Growing demand for medical imaging services exceeds available human resources
+- **Time-consuming manual interpretation**: Radiologists require extensive time to analyze and report findings.
+- **Human error susceptibility**: Fatigue and oversight can lead to missed diagnoses or misinterpretations.
+- **Limited accessibility**: Shortage of qualified radiologists, especially in remote areas.
+- **Inconsistent accuracy**: Diagnostic accuracy varies based on practitioner experience and expertise.
+- **Delayed diagnosis**: Extended waiting times for radiology reports can delay critical treatment decisions.
+- **High costs**: Manual analysis requires expensive specialist consultations.
+- **Scalability issues**: Growing demand for medical imaging services exceeds available human resources.
 
 These challenges result in delayed patient care, increased healthcare costs, and potential missed diagnoses that could be life-threatening.
 
@@ -33,114 +33,105 @@ These challenges result in delayed patient care, increased healthcare costs, and
 XrayBotix addresses these challenges through an intelligent, AI-driven diagnostic platform that combines:
 
 ### 🚀 **Lightning-Fast Analysis**
-- **15-second processing**: Instant AI-powered analysis of uploaded X-ray images
-- **Real-time results**: Immediate feedback with detailed diagnostic insights
-- **Batch processing**: Support for multiple images simultaneously
+- **15-second processing**: Instant AI-powered analysis of uploaded X-ray images.
+- **Real-time results**: Immediate feedback with detailed diagnostic insights.
+- **Batch processing**: Support for multiple images simultaneously.
 
 ### 🧠 **Advanced AI Technology**
-- **Multiple specialized models**: Dedicated AI models for chest, spine, dental, and skull X-rays using a multimodel classifier approach
-- **Deep learning algorithms**: Powered by Teachable Machine's pre-trained models
-- **Pattern recognition**: Advanced detection of fractures, diseases, and abnormalities
-- **Confidence scoring**: Transparent reliability metrics for each diagnosis
+- **Multiple specialized models**: Dedicated AI models for chest, spine, dental, and skull X-rays using a multimodel classifier approach.
+- **Supervised Classificaion algorithms**: Powered by Teachable Machine's pre-trained models.
+- **Pattern recognition**: Advanced detection of fractures, diseases, and abnormalities.
+- **Confidence scoring**: Transparent reliability metrics for each diagnosis.
 
 ### 🔒 **Security & Privacy**
-- **HIPAA-compliant architecture**: Secure handling of sensitive medical data
-- **Automated data deletion**: 30-day automatic removal of uploaded images
-- **Encrypted transmission**: End-to-end encryption for all data transfers
-- **No persistent storage**: Images processed without permanent storage
+- **HIPAA-compliant architecture**: Secure handling of sensitive medical data.
+- **Automated data deletion**: 30-seconds automatic removal of uploaded images.
+- **Encrypted transmission**: End-to-end encryption for all data transfers.
+- **No persistent storage**: Images processed without permanent storage.
 
 ### 📊 **Comprehensive Reporting**
-- **Detailed medical analysis**: AI-generated reports using Google's Gemini API
-- **Evidence-based insights**: Medical recommendations backed by verified databases
-- **Professional PDF reports**: Downloadable, clinical-grade documentation
-- **Specialist recommendations**: Guidance on appropriate medical consultations
+- **Detailed medical analysis**: AI-generated reports using Google's Gemini API using the latest 2.5- flash model.
+- **Evidence-based insights**: Medical recommendations backed by verified databases.
+- **Professional PDF reports**: Downloadable, clinical-grade documentation.
+- **Specialist recommendations**: Guidance on appropriate medical consultations.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### **Frontend Technologies**
-- **HTML5**: Modern semantic markup with accessibility features
-- **CSS3**: Advanced styling with responsive design principles
-- **JavaScript (ES6+)**: Client-side logic and interactive functionality
-- **Bootstrap**: Responsive UI framework for cross-device compatibility
+- **HTML5**: Modern semantic markup with accessibility features.
+- **CSS3**: Advanced styling with responsive design principles.
+- **JavaScript (ES6+)**: Client-side logic and interactive functionality.
+- **Bootstrap**: Responsive UI framework for cross-device compatibility.
 
 ### **AI & Machine Learning**
-- **Teachable Machine**: Google's web-based machine learning platform
-- **TensorFlow.js**: Client-side machine learning inference
-- **Image Classification Models**: Specialized CNN models for different X-ray types
+- **Teachable Machine**: Google's web-based machine learning platform.
+- **TensorFlow.js**: Client-side machine learning inference.
+- **Image Classification Models**: Specialized CNN models for different X-ray types.
   - Chest X-ray Model: `https://teachablemachine.withgoogle.com/models/CHMEJ5Ywr/`
   - Spine X-ray Model: `https://teachablemachine.withgoogle.com/models/8vZGuj_dj/`
   - Dental X-ray Model: `https://teachablemachine.withgoogle.com/models/c6n0-OhWN/`
-  - Skull X-ray Model: Custom trained model
+  - Skull X-ray Model: `https://teachablemachine.withgoogle.com/models/4cYJUrTnl/`
 
 ### **Backend & APIs**
-- **Netlify Functions**: Serverless backend processing
-- **Google Gemini API**: Advanced natural language generation for medical reports
-- **Node.js**: Runtime environment for serverless functions
+- **Netlify Functions**: Serverless backend processing.
+- **Google Gemini API**: Advanced natural language generation for medical reports.
+- **Node.js**: Runtime environment for serverless functions.
 
 ### **Deployment & Infrastructure**
-- **Netlify**: Static site hosting with continuous deployment
-- **GitHub**: Version control and collaborative development
-- **CDN**: Global content delivery for optimal performance
+- **Netlify**: Static site hosting with continuous deployment.
+- **GitHub**: Version control and collaborative development.
+- **CDN**: Global content delivery for optimal performance.
 
 ### **Additional Libraries**
-- **jsPDF**: Client-side PDF generation for reports
-- **Drag & Drop API**: Native file upload functionality
-- **Canvas API**: Image processing and validation
+- **jsPDF**: Client-side PDF generation for reports.
+- **Drag & Drop API**: Native file upload functionality.
+- **Canvas API**: Image processing and validation.
 
 ---
 
 ## 🚧 Challenges Faced & Solutions
 
 ### **1. Image Quality Validation**
-**Challenge**: Ensuring uploaded images are actual X-rays and not random photos
+**Challenge**: Ensuring uploaded images are actual X-rays and not random photos.
 **Solution**: 
-- Implemented advanced grayscale analysis algorithm
-- Brightness and contrast validation (luminance 50-190, contrast ≥25)
-- Minimum resolution requirements (128x128 pixels)
-- Real-time feedback for invalid uploads
+- Implemented advanced grayscale analysis algorithm.
+- Brightness and contrast validation (luminance 50-190, contrast ≥25).
+- Minimum resolution requirements (128x128 pixels).
+- Real-time feedback for invalid uploads.
 
 ### **2. Model Accuracy & Reliability**
-**Challenge**: Achieving consistent diagnostic accuracy across different X-ray types
+**Challenge**: Achieving consistent diagnostic accuracy across different X-ray types.
 **Solution**:
-- Deployed multiple specialized models for different anatomical regions
-- Implemented confidence thresholding (60% minimum for reporting)
-- Added probability-based filtering to show only relevant predictions
-- Continuous model validation and performance monitoring
+- Deployed multiple specialized models for different anatomical regions.
+- Implemented confidence thresholding (60% minimum for reporting).
+- Added probability-based filtering to show only relevant predictions.
+- Continuous model validation and performance monitoring.
 
 ### **3. Medical Report Generation**
-**Challenge**: Creating clinically relevant, evidence-based medical reports
+**Challenge**: Creating clinically relevant, evidence-based medical reports.
 **Solution**:
-- Integrated Google Gemini API for natural language generation
-- Structured prompts with medical terminology requirements
-- Limited response length (200 words) for concise reporting
-- Evidence-based medicine guidelines integration
-
-### **4. Privacy & Security Compliance**
-**Challenge**: Handling sensitive medical data while maintaining HIPAA compliance
-**Solution**:
-- Implemented client-side processing to minimize data exposure
-- Automatic image deletion after analysis
-- Encrypted data transmission
-- No persistent storage of medical images
-- Clear privacy policy and data handling procedures
+- Integrated Google Gemini API for natural language generation.
+- Structured prompts with medical terminology requirements.
+- Limited response length (200 words) for concise reporting.
+- Evidence-based medicine guidelines integration.
 
 ### **5. Cross-Browser Compatibility**
-**Challenge**: Ensuring consistent functionality across different browsers and devices
+**Challenge**: Ensuring consistent functionality across different browsers and devices.
 **Solution**:
-- Progressive enhancement approach
-- Polyfills for older browser support
-- Responsive design for mobile compatibility
-- Comprehensive browser testing (Chrome 90+, Firefox 88+, Safari 14+)
+- Progressive enhancement approach.
+- Polyfills for older browser support.
+- Responsive design for mobile compatibility.
+- Comprehensive browser testing (Chrome 90+, Firefox 88+, Safari 14+).
 
 ### **6. Performance Optimization**
-**Challenge**: Loading large AI models while maintaining fast user experience
+**Challenge**: Loading large AI models while maintaining fast user experience.
 **Solution**:
-- Lazy loading of AI models (loaded only when needed)
-- Model caching for subsequent uses
-- Optimized image preprocessing
-- Progress indicators for user feedback
+- Lazy loading of AI models (loaded only when needed).
+- Model caching for subsequent uses.
+- Optimized image preprocessing.
+- Progress indicators for user feedback.
 
 ---
 
