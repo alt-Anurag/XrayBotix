@@ -38,7 +38,7 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 - **Batch processing**: Support for multiple images simultaneously
 
 ### 🧠 **Advanced AI Technology**
-- **Multiple specialized models**: Dedicated AI models for chest, spine, dental, and skull X-rays
+- **Multiple specialized models**: Dedicated AI models for chest, spine, dental, and skull X-rays using a multimodel classifier approach
 - **Deep learning algorithms**: Powered by Teachable Machine's pre-trained models
 - **Pattern recognition**: Advanced detection of fractures, diseases, and abnormalities
 - **Confidence scoring**: Transparent reliability metrics for each diagnosis
