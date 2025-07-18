@@ -366,7 +366,7 @@ We welcome contributions from the medical and technical communities:
 - **Anurag Kumar Jha** - Lead Developer - [GitHub](https://github.com/alt-Anurag)
 - **Shivam Kumar** - Co-Developer - [GitHub](https://github.com/Err-rr)
 - **Monu Pathak** - Data Analysis and Model Trainer - [GitHub](https://github.com/monupathak-65)
-- **Rahul Kumar Gupta** - Data Analysis and Model Trainer - [GitHub](https://github.com/)
+- **Rahul Kumar Gupta** - Data Analysis and Model Trainer - [GitHub](https://github.com/Rahul3994)
 
 ### **Support Channels**
 - **Technical Issues**: Create an issue on GitHub
