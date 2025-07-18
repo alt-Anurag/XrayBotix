@@ -67,7 +67,6 @@ XrayBotix addresses these challenges through an intelligent, AI-driven diagnosti
 
 ### **AI & Machine Learning**
 - **Teachable Machine**: Google's web-based machine learning platform.
-- **TensorFlow.js**: Client-side machine learning inference.
 - **Image Classification Models**: Specialized CNN models for different X-ray types.
   - Chest X-ray Model: `https://teachablemachine.withgoogle.com/models/CHMEJ5Ywr/`
   - Spine X-ray Model: `https://teachablemachine.withgoogle.com/models/8vZGuj_dj/`
