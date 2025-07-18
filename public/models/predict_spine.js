@@ -102,7 +102,7 @@ function generatePDFReport() {
   const margin = 20;
   let yPosition = margin;
 
-  // Theme colors (you can adjust these to match your website theme)
+  // Theme colors 
   const primaryBlue = [41, 128, 185]; // Header background
   const accentBlue = [52, 152, 219]; // Section headers
   const darkGray = [44, 62, 80]; // Main text
